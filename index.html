@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+    <head>
+        <title>Joe's Hotdog Stand Assignment</title>
+        <style type="text/css">
+            p {font-size: 18px;}
+        </style>
+    </head>
+    <body>
+        <script>
+            function showMoney(x)
+            {
+                let numCents = Math.round(x * 100);
+                let dollars = Math.floor(numCents / 100);
+                let cents = numCents % 100;
+                if (cents < 10) {
+                    cents = '0' + cents;
+                }
+
+                return dollars + '.' + cents;
+            }
+
+            /*For if the customer tries to order nothing or a negative amount of food*/
+            function invalidOrder(numDogs, numFries, numSoda)
+            {
+                document.write(`
+                    <h1>Invalid Order</h1>
+                    <p>You tried to order:</p>
+                    <p>${numDogs} Hotdogs</p>
+                    <p>${numFries} Fries</p>
+                    <p>${numSoda} Sodas</p>
+                    <p><strong>Please try ordering again!</strong></p>
+                `)
+            }
+            
+            dogPrice = 4.80;
+            fryPrice = 3.95;
+            sodaPrice = 1.99;
+
+            let numDogs = prompt("How many hotdogs do you want to order?");
+            let numFries = prompt("How many orders of fries?");
+            let numSoda = prompt("How many sodas would you like with that?");
+
+            numDogs = parseInt(numDogs);
+            numFries = parseInt(numFries);
+            numSoda = parseInt(numSoda);
+
+            let dogTotal = dogPrice * numDogs;
+            let fryTotal = fryPrice * numFries;
+            let sodaTotal = sodaPrice * numSoda;
+
+
+            let subTotal = dogTotal + fryTotal + sodaTotal;
+
+            let discountTotal = 0;
+            if (subTotal >= 25) {
+                discountTotal = subTotal * 0.10;
+                subTotal = subTotal - discountTotal;
+            }
+
+            let tax = subTotal * 0.0625;
+            let finalTotal = subTotal + tax;
+
+            if ((numDogs + numFries + numSoda) == 0) {
+                invalidOrder(numDogs, numFries, numSoda);
+            } else if(numDogs < 0 || numFries < 0 || numSoda < 0) {
+                invalidOrder(numDogs, numFries, numSoda);
+            } else {
+                document.write(`
+                    <h1>Thanks for ordering from Joe's Hotdog Stand!</h1>
+                    <p>Hotdogs: ${numDogs} @ $${showMoney(dogPrice)} each: $${showMoney(dogTotal)}</p>
+                    <p>Fries: ${numFries} @ $${showMoney(fryPrice)} each: $${showMoney(fryTotal)}</p>
+                    <p>Sodas: ${numSoda} @ $${showMoney(sodaPrice)} each: $${showMoney(sodaTotal)}</p>
+                    <p>____________________________</p>
+                    <p>Subtotal: $${showMoney(dogTotal + fryTotal + sodaTotal)}</p>
+                    <p>Discount: -$${showMoney(discountTotal)}</p>
+                    <p>Subtotal after discount: $${showMoney(subTotal)}</p>
+                    <p>Meals Tax (6.25%): +$${showMoney(tax)}</p>
+                    <p>____________________________</p>
+                    <p style="font-size: 22px"><strong>Total: $${showMoney(finalTotal)}</strong></p>
+                `);
+            }
+        </script>
+    </body>
+</html>
